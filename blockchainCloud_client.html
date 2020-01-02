@@ -7,7 +7,406 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="This web app can be used to collaborate between various teams using blockchain technology.">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
+    <!--<link rel="stylesheet" href="css/main.css">-->
+    <style>
+        body {
+            margin: 0;
+            font-size: 16px;
+            background: #111;
+            }
+
+            * {
+            -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            }
+
+            ::-webkit-scrollbar {
+            width: 0.5em;
+            height: 0.25em;
+            }
+
+            ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            }
+
+            ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            }
+
+            button {
+            -ms-flex-item-align: start;
+                align-self: flex-start;
+            display: flexbox;
+            background: transparent;
+            color: mediumspringgreen;
+            padding: 1em 2em;
+            border: none;
+            -webkit-transition: background 0.2s ease;
+            transition: background 0.2s ease;
+            font-size: 1em;
+            }
+
+            button:hover {
+            background: linear-gradient(45deg, teal, mediumSpringGreen);
+            cursor: pointer;
+            color: white;
+            }
+
+            button:first-of-type {
+            margin-left: auto;
+            }
+
+            input {
+            -ms-flex-item-align: start;
+                align-self: flex-start;
+            display: flexbox;
+            width: 100%;
+            padding: 1em;
+            margin: 1em 0;
+            color: white;
+            border: none;
+            font-size: 1em;
+            }
+
+            #modal_container {
+            position: fixed;
+            display: -ms-grid;
+            display: grid;
+            width: 100vw;
+            height: 100vh;
+            place-items: center;
+            z-index: 12;
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease;
+            }
+
+            #article_creation_modal {
+            position: relative;
+            overflow-y: auto;
+            max-height: 24em;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            width: 24em;
+            background: #222;
+            padding: 1em 2em;
+            color: white;
+            -webkit-transform: translateY(1em);
+                    transform: translateY(1em);
+            -webkit-transition: -webkit-transform 0.2s ease;
+            transition: -webkit-transform 0.2s ease;
+            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+            }
+
+            #article_creation_modal h3, #article_creation_modal h4 {
+            font-weight: normal;
+            width: 100%;
+            }
+
+            #article_creation_modal input {
+            -ms-flex-item-align: start;
+                align-self: flex-start;
+            display: flexbox;
+            width: 100%;
+            padding: 1em;
+            border: none;
+            margin: 1em 0;
+            background: #111;
+            color: white;
+            }
+
+            #article_creation_modal select {
+            width: 100%;
+            padding: 1em;
+            background: #111;
+            color: white;
+            border: none;
+            font-size: 1em;
+            }
+
+            #article_creation_modal #section_settings, #article_creation_modal #section_names_select_settings {
+            width: 100%;
+            }
+
+            #article_creation_modal button {
+            margin: 1em 0;
+            }
+
+            #article_creation_modal #hide_article_creation_modal {
+            margin-left: auto;
+            }
+
+            .section-title {
+            color: #111;
+            background: mediumspringgreen;
+            padding: 0.5em;
+            display: inline-block;
+            margin: 0.5em 0;
+            }
+
+            .gallery-container {
+            position: relative;
+            }
+
+            .gallery-container .navigation-arrows {
+            -webkit-transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease;
+            cursor: pointer;
+            padding: 1.5em;
+            height: 100%;
+            width: 4em;
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+            fill: white;
+            }
+
+            .gallery-container .navigation-arrows:nth-of-type(1) {
+            background: -webkit-gradient(linear, right top, left top, from(transparent), to(rgba(0, 0, 0, 0.6)));
+            background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.6));
+            }
+
+            .gallery-container .navigation-arrows:nth-of-type(2) {
+            right: 0;
+            background: -webkit-gradient(linear, left top, right top, from(transparent), to(rgba(0, 0, 0, 0.6)));
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.6));
+            }
+
+            .gallery {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: row;
+                    flex-direction: row;
+            overflow-x: auto;
+            -ms-scroll-snap-type: x mandatory;
+                scroll-snap-type: x mandatory;
+            }
+
+            .gallery-name {
+            font-weight: normal;
+            padding: 0.2em 0;
+            margin-bottom: 0.5em;
+            color: white;
+            }
+
+            .article-body {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            scroll-snap-align: center;
+            min-width: 30%;
+            background-color: #222;
+            color: white;
+            margin: 0 1em 1em 0;
+            -webkit-box-shadow: 0.25px 0.5em 0.5em rgba(0, 0, 0, 0.3);
+                    box-shadow: 0.25px 0.5em 0.5em rgba(0, 0, 0, 0.3);
+            }
+
+            .article-body .article-header {
+            padding: 1em;
+            word-break: break-all;
+            }
+
+            .article-body .article-header h5 {
+            font-weight: normal;
+            }
+
+            .article-body .card-body {
+            padding: 1em;
+            -webkit-box-flex: 1;
+                -ms-flex: 1;
+                    flex: 1;
+            }
+
+            .article-body .card-footer {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            padding: 1em;
+            }
+
+            .article-body .card-footer h5 {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            font-weight: normal;
+            display: inline-flexbox;
+            -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                    user-select: none;
+            -ms-flex-line-pack: center;
+                align-content: center;
+            }
+
+            .article-body .card-footer h5:first-of-type {
+            margin-left: auto;
+            color: mediumspringgreen;
+            cursor: pointer;
+            }
+
+            .article-body .card-footer h5 svg {
+            stroke: mediumspringgreen;
+            width: 1.2em;
+            margin-right: 0.5em;
+            }
+
+            .article-body .card-footer h5 svg:hover {
+            fill: mediumspringgreen;
+            }
+
+            .show {
+            opacity: 1;
+            pointer-events: all;
+            }
+
+            .hide {
+            opacity: 0;
+            pointer-events: none;
+            }
+
+            #article_container {
+            padding: 2em;
+            }
+
+            .no-transformations {
+            -webkit-transform: none !important;
+                    transform: none !important;
+            }
+
+            #navbar {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: row;
+                    flex-direction: row;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            color: white;
+            background: #222;
+            }
+
+            #navbar #icon {
+            width: 2em;
+            margin: 0 0.5em;
+            }
+
+            #navbar button {
+            padding: 1.2em 2em;
+            background: linear-gradient(45deg, teal, mediumSpringGreen);
+            text-transform: uppercase;
+            font-weight: bold;
+            color: white;
+            }
+
+            #loader_container {
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            top: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: -ms-grid;
+            display: grid;
+            place-content: center;
+            z-index: 15;
+            }
+
+            #loader_container #spinner {
+            position: relative;
+            height: 2em;
+            fill: teal;
+            overflow: visible;
+            -ms-grid-column-align: center;
+                justify-self: center;
+            }
+
+            #loader_container h4 {
+            font-weight: normal;
+            color: white;
+            }
+
+            .pulse .first-orb {
+            -webkit-animation: pulse 1s infinite ease;
+                    animation: pulse 1s infinite ease;
+            }
+
+            .pulse .second-orb {
+            -webkit-animation: pulse 1s 0.1s infinite ease;
+                    animation: pulse 1s 0.1s infinite ease;
+            }
+
+            .pulse .third-orb {
+            -webkit-animation: pulse 1s 0.2s infinite ease;
+                    animation: pulse 1s 0.2s infinite ease;
+            }
+
+            @-webkit-keyframes pulse {
+            0% {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+            }
+            60% {
+                -webkit-transform: scale(1.5);
+                        transform: scale(1.5);
+            }
+            100% {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+            }
+            }
+
+            @keyframes pulse {
+            0% {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+            }
+            60% {
+                -webkit-transform: scale(1.5);
+                        transform: scale(1.5);
+            }
+            100% {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+            }
+            }
+
+            @media only screen and (max-width: 720px) {
+            .article-body {
+                min-width: calc(100% - 2em);
+            }
+            #article_container {
+                padding: 1em;
+            }
+            .navigation-arrows {
+                opacity: 0;
+                pointer-events: none;
+            }
+            }
+            /*# sourceMappingURL=main.css.map */
+    </style>
 </head>
 
 <script>
@@ -92,7 +491,7 @@
                 <circle class="third-orb" cx="68" cy="86" r="32"/>
             </g>
         </svg>
-        <h3 id="show_log_events"></h3>
+        <h4 id="show_log_events"></h4>
     </div>
 
     <section id="article_container">
@@ -101,11 +500,19 @@
 </div>
 
 <script>
-    function show_article_creation_modal(element){ 
-        document.getElementById('modal_container').classList.remove('hide');
+    function show_article_creation_modal(){ 
+        let container = document.getElementById('modal_container');
+        container.classList.remove('hide');
+        let modal = document.getElementById('article_creation_modal')
+        modal.classList.add('no-transformations');
+        window.onclick = function(event) {
+            if (event.target == container)
+                hide_article_creation_modal(modal);
+        }
     }
     function hide_article_creation_modal(element){ 
         element.parentNode.classList.add('hide');
+        element.classList.remove('no-transformations');
     }
     let options = {
         root: null,
@@ -144,7 +551,23 @@
     }
     function showMessage(msg) {
         document.getElementById('show_log_events').textContent = msg;
+        if(document.getElementById('loader_container').classList.contains('hide')){
+            showLoader()
+            setTimeout(() => {
+                hideLoader()
+            }, 1000);
         }
+    }
+    function showLoader(){
+        let spinner = document.getElementById('loader_container');
+            spinner.firstElementChild.classList.add('pulse');
+            spinner.classList.remove('hide');
+    }
+    function hideLoader(){
+        let spinner = document.getElementById('loader_container');
+            spinner.firstElementChild.classList.remove('pulse');
+            spinner.classList.add('hide');
+    }
 </script>
 
 <script>
@@ -7134,9 +7557,7 @@
 
 <script>
     function onLoadStartUp() {
-        let spinner = document.getElementById('loader_container');
-        spinner.firstElementChild.classList.add('pulse');
-        spinner.classList.remove('hide');
+        showLoader();
         initIndexedDB().then(result => {
             console.log(result)
             showMessage(result)
@@ -7375,9 +7796,6 @@
         },
 
         showFullContentOfArticle: function(obj) {
-            let spinner = document.getElementById('loader_container');
-            spinner.firstElementChild.classList.remove('pulse');
-            spinner.classList.add('hide');
             const full_data_div = document.getElementById('current_data'),
                   articleSubject = floGlobals.appObjects[this.SUBJECT]; 
 
@@ -7412,7 +7830,7 @@
 
                     if(typeof secObject.section_details==="object"
                       && secObject.section_details.section_name.length) {
-                      article_structure += `<h3 class="gallery-name">${secKey.toUpperCase()}: ${secObject.section_details.section_name}</h3>`;
+                      article_structure += `<h3 class="gallery-name">${secKey.toUpperCase()} - ${secObject.section_details.section_name}</h3>`;
                     }
              
                     // Add non scored new entries from users
@@ -7451,7 +7869,11 @@
                         } else {
                           if(vc_array.includes(vc)) continue;
                         }
-
+                        let fill;
+                        if(article_data.score > 0)
+                            fill = 'mediumspringgreen'
+                        else 
+                            fill = 'none'   
                         article_structure += 
                         `<div class="article-body">
                                 <div class="article-header">
@@ -7464,7 +7886,12 @@
                                     <input type="hidden" id="hash_${gen_div_id}" value="${content_hash}">
                                 </div>
                                 <div class="card-footer">
-                                    <h5 title="Give score to this article" id="score_${vc}" onclick="cloudArticleApp.upgrade_article()">SCORE ${article_data.score}</h5>
+                                    <h5 title="Give score to this article" id="score_${vc}" onclick="cloudArticleApp.upgrade_article()">
+                                        <svg viewBox="0 0 16.55 16" style="enable-background:new 0 0 16.55 16;" xml:space="preserve" fill="${fill}">
+                                            <polygon points="8.28,13.27 3.16,16 4.14,10.21 0,6.11 5.72,5.27 8.28,0 10.83,5.27 16.55,6.11 12.41,10.21 13.39,16"/>
+                                        </svg>
+                                        ${article_data.score}
+                                    </h5>
                                 </div>
                           </div>`;
                         tempCounter++;
@@ -7484,12 +7911,12 @@
                 
             }
             full_data_div.innerHTML = article_structure
-
+            hideLoader();
             //section_settings
             if(!floGlobals.subAdmins.includes(myFloID)) return false;
             const section_names_settings = document.getElementById('section_names_select_settings');
             let section_settings_html = `<h4>Section Settings</h4>
-                                        <select class="form-control" id="topic_name_section" onchange="cloudArticleApp.pop_up_section_names_ui()">
+                                        <select id="topic_name_section" onchange="cloudArticleApp.pop_up_section_names_ui()">
                                         <option>Choose Topic...</option>`;
             Object.keys(floGlobals.appObjects[this.SUBJECT]).forEach(k=>{
               section_settings_html += `<option>${k}</option>`;
@@ -7508,13 +7935,13 @@
             
             if(!Object.keys(floGlobals.appObjects[this.SUBJECT]).includes(Topic)) return;
             section_settings.innerHTML=""; 
-            section_settings_html += `<h5>Section Names: </h5>`;
+            section_settings_html += `<h4>Change section names </h4>`;
             for(vals of Object.values(floGlobals.appObjects[this.SUBJECT][Topic].data)) {
-              section_settings_html += `<label for="section${sec_counter}">Section ${sec_counter}: </label>
-                                        <input type="text" id="section${sec_counter}" class="form-control" name="section_names_ip" value="${vals.section_details.section_name}">`;
+              section_settings_html += `<label for="section${sec_counter}">Section ${sec_counter} </label>
+                                        <input type="text" id="section${sec_counter}" name="section_names_ip" value="${vals.section_details.section_name}">`;
               sec_counter++;
             }
-            section_settings_html += `<button id="change-section-names-btn" onclick="cloudArticleApp.update_section_names()">Update Section Names</button>`;
+            section_settings_html += `<button id="change-section-names-btn" onclick="cloudArticleApp.update_section_names()">Update</button>`;
 
             section_settings.innerHTML = section_settings_html;          
         },
@@ -7531,6 +7958,7 @@
       
           floCloudAPI.updateObjectData(floGlobals.appObjects[this.SUBJECT], full_data, this.SUBJECT, {receiverID: floGlobals.adminID}); 
           this.retrieveLatestContent();
+          hide_article_creation_modal();
         },
 
         retrieveLatestContent: async function(receiverID=floGlobals.adminID, senderIDs=floGlobals.subAdmins) {

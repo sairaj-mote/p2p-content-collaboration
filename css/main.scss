@@ -30,7 +30,7 @@ button{
     align-self: flex-start;
     display: flexbox;
     background: transparent;
-    color: white;
+    color: mediumspringgreen;
     padding: 1em 2em;
     border: none;
     transition: background 0.2s ease;
@@ -38,6 +38,7 @@ button{
     &:hover{
         background: linear-gradient(45deg, teal, mediumSpringGreen);
         cursor: pointer;
+        color: white;
     }
     &:first-of-type{
         margin-left: auto;
@@ -67,12 +68,15 @@ input{
 #article_creation_modal{
     position: relative;
     overflow-y: auto;
+    max-height: 24em;
     display: flex;
     flex-wrap: wrap;
     width: 24em;
     background: #222;
     padding: 1em 2em;
     color: white;
+    transform: translateY(1em);
+    transition: transform 0.2s ease;
     h3,h4{
         font-weight: normal;
         width: 100%;
@@ -106,7 +110,11 @@ input{
     }
 }
 .section-title{
-    color: white;
+    color: #111;
+    background: mediumspringgreen;
+    padding: 0.5em;
+    display: inline-block;
+    margin: 0.5em 0;
 }
 .gallery-container{
     position: relative;
@@ -122,10 +130,10 @@ input{
         transform: translateY(-50%);
         fill: white;
     }
-    svg:nth-of-type(1){
+    .navigation-arrows:nth-of-type(1){
         background: linear-gradient(to left, transparent, rgba(0,0,0, 0.6));
     }
-    svg:nth-of-type(2){
+    .navigation-arrows:nth-of-type(2){
         right: 0;
         background: linear-gradient(to right, transparent, rgba(0,0,0, 0.6));
     }
@@ -140,9 +148,9 @@ input{
 
 .gallery-name{
     font-weight: normal;
+    padding: 0.2em 0;
+    margin-bottom: 0.5em;
     color: white;
-    background: #00fa9a;
-    width: auto;
 }
 
 .article-body{
@@ -152,7 +160,7 @@ input{
     min-width: 30%;
     background-color: #222;
     color: white;
-    margin: 1em 1em 1em 0;
+    margin: 0 1em 1em 0;
     box-shadow: 0.25px 0.5em 0.5em rgba(0,0,0, 0.3);
     .article-header{
         padding: 1em;
@@ -169,13 +177,23 @@ input{
         display: flex;
         padding: 1em;
         h5{
+            display: flex;
             font-weight: normal;
             display: inline-flexbox;
             user-select: none;
+            align-content: center;
             &:first-of-type{
                 margin-left: auto;
                 color: mediumspringgreen;
                 cursor: pointer;
+            }
+            svg{
+                stroke: mediumspringgreen;
+                width: 1.2em;
+                margin-right: 0.5em;
+                &:hover{
+                    fill: mediumspringgreen;
+                }
             }
         }
     }
@@ -193,7 +211,7 @@ input{
 }
 
 .no-transformations{
-    transform: none;
+    transform: none !important;
 }
 
 #navbar{
@@ -212,6 +230,7 @@ input{
         background: linear-gradient(45deg, teal, mediumSpringGreen);
         text-transform: uppercase;
         font-weight: bold;
+        color: white;
     }
 }
 
@@ -231,7 +250,7 @@ input{
         overflow: visible;
         justify-self: center;
     }
-    h3{
+    h4{
         font-weight: normal;
         color: white;
     }
@@ -265,12 +284,13 @@ input{
 
 @media only screen and (max-width: 720px){
     .article-body{
-        min-width: 100%;
+        min-width: calc(100% - 2em);
        }
        #article_container{
         padding: 1em;
     }
     .navigation-arrows{
-        opacity: 0.4;
+        opacity: 0;
+        pointer-events: none;
     }
 }
