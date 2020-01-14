@@ -37,8 +37,12 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+h1, h2, h3, h4, h5 {
+  font-family: 'Quicksand', sans-serif;
+}
+
 ::-webkit-scrollbar {
-  width: 0.5rem;
+  width: 0.6rem;
   height: 0.25rem;
 }
 
@@ -47,7 +51,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -323,6 +327,9 @@ input {
   line-height: 1.4rem;
   max-height: 60vh;
   overflow-y: auto;
+  font-family: 'Quicksand', serif;
+  font-weight: normal !important;
+  font-size: 1.1rem;
 }
 
 .article-body .card-footer {
@@ -512,7 +519,7 @@ input {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.3);
   }
   .article-body {
     min-width: calc(100% - 2em) !important;
