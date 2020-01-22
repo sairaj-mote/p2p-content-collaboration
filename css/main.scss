@@ -27,26 +27,29 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 
-h1,h2,h3,h4,h5{
+h1,h2,h3,h4,h5,span,p{
     font-family: 'Quicksand', sans-serif;
 }
 
 ::-webkit-scrollbar {
     width: 0.6rem;
     height: 0.25rem;
-  }
+}
   
-  ::-webkit-scrollbar-track {
-    background: rgba($color: #fff, $alpha: 0.1);
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: rgba($color: #fff, $alpha: 0.2);
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+::-webkit-scrollbar-track {
+background: rgba($color: #fff, $alpha: 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+background: rgba($color: #fff, $alpha: 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+.hide-completely{
+    display: none;
+}
 button{
     display: inline-flex;
     align-items: center;
@@ -55,9 +58,10 @@ button{
     padding: 1.2rem;
     border: none;
     transition: background 0.2s ease;
-    font-weight: bold;
+    font-weight: 500;
     svg{
         height: 1rem;
+        width: 1rem;
     }
     &:hover{
         background: var(--light-shade);
@@ -81,6 +85,40 @@ input{
     color: white;      
     font-size: 1rem !important;  
 }
+.dropdown {
+    position: relative;
+  }
+.dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: #222;
+    width: max-content;
+    text-align: right;
+    box-shadow: 0.2rem 0.4rem 0.6rem rgba($color: #000000, $alpha: 0.24);
+    z-index: 2;
+    right: 0;
+    button{
+        width: 100%;
+        svg{
+            stroke-width: 0.2rem !important;
+            fill: none;
+            overflow: visible;
+        }
+    }
+    button:nth-of-type(2){
+        svg{
+            transform: rotate(45deg);
+        }
+    }
+  }
+  .dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .spacer{
+      flex: 1;
+  }
 
 .popup-container{
     display: grid;
@@ -91,8 +129,9 @@ input{
     left: 0;
     place-items: center;
     background: rgba($color: #000000, $alpha: 0.4);
+    backdrop-filter: blur(0.5rem);
     z-index: 4;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.3s ease;
     .popup{
         overflow-y: auto;
         padding: 1rem 0;
@@ -105,6 +144,10 @@ input{
         box-shadow: 0 2rem 2rem rgba($color: #000000, $alpha: 0.24);
         color: white;
     }
+}
+
+#floating_pill{
+    display: none;
 }
 
 #article_creation_modal{
@@ -226,19 +269,25 @@ input{
         word-break: break-all;
         h5{
             font-weight: normal;
+            color: #82DDF0;
         }
     }
     .card-body{
+        position: relative;
         flex: 1;
         .content-div{
-            padding: 0 1rem;
+            padding: 0 1rem 4rem 1rem;
             min-height: 12rem;
-            line-height: 1.4rem;
+            line-height: 1.2rem;
             max-height: 60vh;
             overflow-y: auto;
-            font-family: 'Quicksand', serif;
-            font-weight: normal !important;
-            font-size: 1.1rem;
+            font-weight: 400;
+        }
+        button{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin-right: 1rem;
         }
     }
     .card-footer{
@@ -249,18 +298,18 @@ input{
             font-weight: normal;
             user-select: none;
             align-items: center;
-            &:first-of-type{
+            color: var(--primary-color);
+            cursor: pointer;
+            &:nth-of-type(2){
                 margin-left: auto;
-                color: var(--primary-color);
-                cursor: pointer;
+                &:hover svg{
+                    fill: var(--primary-color);
+                }
             }
             svg{
                 stroke: var(--primary-color);
                 width: 1.2rem;
                 margin-right: 0.5rem;
-                &:hover{
-                    fill: var(--primary-color);
-                }
             }
         }
     }
@@ -280,6 +329,10 @@ input{
     height: calc(100% - 4.4rem);
     bottom: 0;
     overflow-y: auto;
+}
+
+.snippet-selected{
+    outline: 1px solid var(--primary-color);
 }
 
 .no-transformations{
@@ -312,20 +365,31 @@ input{
         text-transform: uppercase;
         svg{
             stroke: var(--primary-color);
-            stroke-width: 0.2rem;
+            stroke-width: 0.5rem;
             margin-right: 0.5rem;
+            fill: none;
+            overflow: visible;
+        }
+    }
+    #refresh_btn{
+        svg{
+            stroke-width: 0.3rem;
         }
     } 
 }
 
-
+.floating-btn{
+    display: none;
+}
 
 #loader_container{
     position: fixed;
     height: 100vh;
     width: 100vw;
     top: 0;
-    background: rgba(0,0,0, 0.3);
+    background: rgba(0,0,0, 0.4);
+    backdrop-filter: blur(0.5rem);
+    transition: opacity 0.6s ease;
     display: grid;
     place-content: center;
     z-index: 4;
@@ -368,6 +432,21 @@ input{
         transform: scale(1);
     }
 }
+.spin{
+    svg{
+        animation: spin 0.6s ease infinite;
+        transform-origin: center;
+    }
+}
+
+@keyframes spin{
+    0%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(359deg);
+    }
+}
 
 @media only screen and (max-width: 640px){
     ::-webkit-scrollbar {
@@ -382,12 +461,52 @@ input{
       ::-webkit-scrollbar-thumb {
         background: rgba($color: #fff, $alpha: 0.3);
       }
-      
+    .hide-on-mobile{
+        display: none;
+    }
     .article-body{
         min-width: calc(100% - 2em) !important;
     }
+    #floating_pill,.floating-btn{
+        display: flex;
+        margin: 2rem;
+        background: #222;
+        position: fixed;
+        box-shadow: 0.2rem 0.4rem 0.6rem rgba($color: #000000, $alpha: 0.24),
+                    -0.1rem -0.2rem 0.4rem rgba($color: #000000, $alpha: 0.16);
+        z-index: 3;
+        button{
+            width: 100%;
+            svg{
+                fill: none;
+                stroke: var(--primary-color);
+                stroke-width: 0.2rem;
+            }
+        }
+    }
+    .floating-btn{
+        background: #282828;
+        bottom: 0;
+        right: 0;
+        border-radius: 5rem;
+    }
+    #floating_pill{
+        flex-direction: column;
+        button{
+            svg{
+                stroke-width: 0.2rem;
+                margin-right: 0.5rem;
+            }
+            &:nth-of-type(1){
+                svg{
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+    
        #article_container{
-        padding: 1rem;
+        padding: 1rem 1rem 6rem 1rem;
     }
     .navigation-arrows{
         opacity: 0;
@@ -406,5 +525,8 @@ input{
 @media only screen and (max-width: 1280px){
     .article-body{
         min-width: 50%;
-       }
+    }
+    .hide-on-medium{
+        display: none;
+    }
 }
