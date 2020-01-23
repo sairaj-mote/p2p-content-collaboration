@@ -1,4 +1,5 @@
 html{
+    scroll-behavior: smooth;
     font-size: 16px;
     @media only screen and (min-width: 1920px){
             font-size: 18px;
@@ -48,7 +49,22 @@ background: rgba($color: #fff, $alpha: 0.2);
 background: #555;
 }
 .hide-completely{
-    display: none;
+    display: none !important;
+}
+._2rem-stroke{
+    svg{
+        stroke-width: 0.2rem !important;
+    }
+}
+._5rem-stroke{
+    svg{
+        stroke-width: 0.5rem !important;
+    }
+}
+.no-fill{
+    svg,path,polyline{
+        fill: none !important;
+    }
 }
 button{
     display: inline-flex;
@@ -85,6 +101,11 @@ input{
     color: white;      
     font-size: 1rem !important;  
 }
+#clear_export{
+    svg{
+        transform: rotate(45deg);
+    }
+}
 .dropdown {
     position: relative;
   }
@@ -100,14 +121,8 @@ input{
     button{
         width: 100%;
         svg{
-            stroke-width: 0.2rem !important;
             fill: none;
             overflow: visible;
-        }
-    }
-    button:nth-of-type(2){
-        svg{
-            transform: rotate(45deg);
         }
     }
   }
@@ -146,7 +161,7 @@ input{
     }
 }
 
-#floating_pill{
+#context_menu{
     display: none;
 }
 
@@ -214,7 +229,7 @@ input{
             align-self: center;
             svg{
                 stroke: var(--primary-color);
-                stroke-width: 0.2rem;   
+                stroke-width: 0.3rem;   
                 fill: none; 
                 margin-right: 0.5rem;
             }
@@ -282,6 +297,9 @@ input{
             max-height: 60vh;
             overflow-y: auto;
             font-weight: 400;
+            *{
+                font-family: 'Roboto', sans-serif;
+            }
         }
         button{
             position: absolute;
@@ -322,6 +340,7 @@ input{
     opacity: 0;
     pointer-events: none;
 }
+
 #article_container{
     padding: 2rem;
     position: absolute;
@@ -347,7 +366,7 @@ input{
     align-items: center;
     color: white;
     background: #222;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     z-index: 2;
     h5{
         font-weight: normal;
@@ -365,17 +384,12 @@ input{
         text-transform: uppercase;
         svg{
             stroke: var(--primary-color);
-            stroke-width: 0.5rem;
+            stroke-width: 0.2rem;
             margin-right: 0.5rem;
             fill: none;
             overflow: visible;
         }
     }
-    #refresh_btn{
-        svg{
-            stroke-width: 0.3rem;
-        }
-    } 
 }
 
 .floating-btn{
@@ -404,6 +418,9 @@ input{
     h4{
         font-weight: normal;
         color: white;
+    }
+    button{
+        margin: auto;
     }
 }
 
@@ -467,7 +484,7 @@ input{
     .article-body{
         min-width: calc(100% - 2em) !important;
     }
-    #floating_pill,.floating-btn{
+    #context_menu,.floating-btn{
         display: flex;
         margin: 2rem;
         background: #222;
@@ -480,7 +497,6 @@ input{
             svg{
                 fill: none;
                 stroke: var(--primary-color);
-                stroke-width: 0.2rem;
             }
         }
     }
@@ -489,8 +505,14 @@ input{
         bottom: 0;
         right: 0;
         border-radius: 5rem;
+        overflow: hidden;
+        button{
+            svg{
+                stroke-width: 0.2rem;
+            }
+        }
     }
-    #floating_pill{
+    #context_menu{
         flex-direction: column;
         button{
             svg{
@@ -506,7 +528,10 @@ input{
     }
     
        #article_container{
-        padding: 1rem 1rem 6rem 1rem;
+        padding: 0.5rem 0.5rem 6rem 0.5rem;
+    }
+    #navbar{
+        padding: 0.5rem;
     }
     .navigation-arrows{
         opacity: 0;
