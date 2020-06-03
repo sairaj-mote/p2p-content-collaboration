@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap');
 html{
     scroll-behavior: smooth;
     font-size: 16px;
@@ -13,7 +14,6 @@ html{
     }
 }
 body{
-    margin: 0;
     font-size: 16px;
     background: #111;
 }
@@ -24,12 +24,14 @@ body{
 }
 
 *{
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
 
 h1,h2,h3,h4,h5,span,p{
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Barlow', sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -51,29 +53,16 @@ background: #555;
 .hide-completely{
     display: none !important;
 }
-._2rem-stroke{
-    svg{
-        stroke-width: 0.2rem !important;
-    }
-}
-._5rem-stroke{
-    svg{
-        stroke-width: 0.5rem !important;
-    }
-}
-.no-fill{
-    svg,path,polyline{
-        fill: none !important;
-    }
-}
 button{
     display: inline-flex;
     align-items: center;
     background: transparent;
     color: var(--primary-color);
-    padding: 1.2rem;
+    padding: 0.6rem 1rem;
     border: none;
     transition: background 0.2s ease;
+    font-family: 'Barlow', sans-serif;
+    letter-spacing: 0.06em;
     font-weight: 500;
     svg{
         height: 1rem;
@@ -101,6 +90,14 @@ input{
     color: white;      
     font-size: 1rem !important;  
 }
+.icon{
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 6;
+    overflow: visible;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 #clear_export{
     svg{
         transform: rotate(45deg);
@@ -120,10 +117,7 @@ input{
     right: 0;
     button{
         width: 100%;
-        svg{
-            fill: none;
-            overflow: visible;
-        }
+        padding: 1rem 1.5rem;
     }
   }
   .dropdown:hover .dropdown-content {
@@ -135,27 +129,29 @@ input{
       flex: 1;
   }
 
-.popup-container{
+  .popup-container{
     display: grid;
     position: fixed;
-    width: 100vw;
-    height: 100vh;
     top: 0;
+    bottom: 0;
     left: 0;
+    right: 0;
     place-items: center;
-    background: rgba($color: #000000, $alpha: 0.4);
-    backdrop-filter: blur(0.5rem);
-    z-index: 4;
+    background: rgba($color: #000000, $alpha: 0.6);
+    z-index: 10;
     transition: opacity 0.3s ease;
     .popup{
-        overflow-y: auto;
-        padding: 1rem 0;
+        width: 24rem;
+        align-self: center;
+        border-radius: 0.4rem;
+        height: auto;
+        padding: 1.5rem;
         position: relative;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         background: #222;
-        transform: translateY(1em);
-        transition: transform 0.2s ease;
+        transform: translateY(1rem);
+        transition: transform 0.3s;
         box-shadow: 0 2rem 2rem rgba($color: #000000, $alpha: 0.24);
         color: white;
     }
@@ -164,29 +160,12 @@ input{
 #context_menu{
     display: none;
 }
-
-#article_creation_modal{
-    max-height: 24rem;
-    width: 24rem;
-    padding: 1rem 2rem;
-    h3,h4{
-        font-weight: normal;
-        width: 100%;
-    }
-   
-    button{
-        margin: 1rem 0;
-    }
-    button:first-of-type{
-        margin-left: auto;
-        margin-right: 1rem;
-    }
-}
 .section-title{
     display: flex;
     width: 100%;
     align-items: center;
     flex-direction: row;
+    margin-bottom: 1rem;
     h2{
         color: #111;
         background: var(--primary-color);
@@ -202,13 +181,10 @@ input{
 .edit-article{
     margin-left: auto;
     svg{
-        fill: var(--primary-color);
-        margin-right: 0.5rem;
+        margin-right: 1rem;
     }
 }
 #edit_article{
-    width: 24rem;
-    padding: 0;
     label{
         font-size: 0.9rem;
     }
@@ -222,23 +198,19 @@ input{
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 0.5rem 2rem;
+        padding: 0.5rem 0;
         button{
             margin-left: auto;
             margin-right: 0;
             align-self: center;
             svg{
-                stroke: var(--primary-color);
-                stroke-width: 0.3rem;   
-                fill: none; 
                 margin-right: 0.5rem;
             }
         }
     }
     #edit_section_container{
-        max-height: 50vh;
+        max-height: 40vh;
         overflow-y: auto;
-        padding: 1rem 2rem;
     }
 }
 .gallery-container{
@@ -382,12 +354,12 @@ input{
     }
     button{
         text-transform: uppercase;
+        margin-right: 0.5rem;
+        &:last-of-type{
+            margin-right: 0;
+        }
         svg{
-            stroke: var(--primary-color);
-            stroke-width: 0.2rem;
-            margin-right: 0.5rem;
-            fill: none;
-            overflow: visible;
+            margin-right: 0.6rem;
         }
     }
 }
@@ -402,7 +374,6 @@ input{
     width: 100vw;
     top: 0;
     background: rgba(0,0,0, 0.4);
-    backdrop-filter: blur(0.5rem);
     transition: opacity 0.6s ease;
     display: grid;
     place-content: center;
@@ -414,13 +385,14 @@ input{
         fill: teal;
         overflow: visible;
         justify-self: center;
+        margin-bottom: 2rem;
     }
     h4{
         font-weight: normal;
         color: white;
     }
     button{
-        margin: auto;
+        margin: 1rem auto auto auto;
     }
 }
 
@@ -494,10 +466,6 @@ input{
         z-index: 3;
         button{
             width: 100%;
-            svg{
-                fill: none;
-                stroke: var(--primary-color);
-            }
         }
     }
     .floating-btn{
@@ -506,19 +474,10 @@ input{
         right: 0;
         border-radius: 5rem;
         overflow: hidden;
-        button{
-            svg{
-                stroke-width: 0.2rem;
-            }
-        }
     }
     #context_menu{
         flex-direction: column;
         button{
-            svg{
-                stroke-width: 0.2rem;
-                margin-right: 0.5rem;
-            }
             &:nth-of-type(1){
                 svg{
                     transform: rotate(45deg);
@@ -527,7 +486,7 @@ input{
         }
     }
     
-       #article_container{
+    #article_container{
         padding: 0.5rem 0.5rem 6rem 0.5rem;
     }
     #navbar{
@@ -537,14 +496,15 @@ input{
         opacity: 0;
         pointer-events: none;
     }
-    .popup{
-        width: 100% !important;
-    }
     .popup-container{
-        align-items: flex-end;
+        .popup{
+            align-self: flex-end;
+            width: 100%;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
     }
     #edit_section_container{
-        max-height: 70vh !important;
+        max-height: 60vh !important;
     }
 }
 @media only screen and (max-width: 1280px){
