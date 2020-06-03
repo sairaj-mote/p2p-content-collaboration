@@ -220,7 +220,7 @@ label{
         width: 100%;
     }
     #edit_section_container{
-        max-height: 40vh;
+        max-height: 50vh;
         overflow-y: auto;
     }
 }
@@ -293,7 +293,7 @@ label{
             padding: 0 1rem 4rem 1rem;
             min-height: 16rem;
             line-height: 1.4em;
-            max-height: 60vh;
+            max-height: 50vh;
             overflow-y: auto;
             font-weight: 400;
             *{
@@ -365,7 +365,7 @@ label{
     align-items: center;
     color: white;
     background: #222;
-    padding: 0.5rem 1rem;
+    padding: 1rem;
     z-index: 2;
     h5{
         font-weight: normal;
@@ -517,9 +517,6 @@ label{
     
     #article_container{
         padding: 0.5rem 0.5rem 6rem 0.5rem;
-    }
-    #navbar{
-        padding: 0.5rem;
     }
     .navigation-arrows{
         opacity: 0;
