@@ -73,10 +73,27 @@
         </div>
         <div id="priv_key_sign_in" class="hide-completely fade-in">
             <sm-input id="priv_key_field" placeholder="Private key" type="password" privateKey required></sm-input>
-            <sm-button id="sign_in_button" variant="primary" disabled>continue</sm-button>
+            <sm-button id="sign_in_button" class="margin-top-1-5" variant="primary" disabled>continue</sm-button>
         </div>
         <p>Don't have a private key? get it <a href="https://flo-webwallet.duckdns.org/"
                 target="_blank">here</a><br> or you can sign as guest.</p>
+    </sm-popup>
+    <sm-popup id="scoring_popup">
+        <header id="article_list__header" class="popup__header" slot="header">
+            <button id="scoring_popup__close_button" class="close-button" onclick="hidePopup()">
+                <svg class="icon icon-only close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
+            </button>
+            <h3>Update score</h3>
+        </header>
+        <sm-input id="update_score_field" placeholder="Score" type="number" step="0.1" min="0" max="100" animate required></sm-input>
+        <div id="inc_section" class="grid flow-column margin-top-1-5 margin-bottom-1-5">
+            <sm-button variant="outlined" onclick="incScore(0.1)">+ 0.1</sm-button>
+            <sm-button variant="outlined" onclick="incScore(1)">+ 1</sm-button>
+            <sm-button variant="outlined" onclick="incScore(5)">+ 5</button>
+        </div>
+        <div class="flex align-center margin-top-1-5">
+            <sm-button id="get_new_score" variant="primary" class="justify-right" disabled>Update</sm-button>
+        </div>
     </sm-popup>
     <sm-popup id="article_list_popup">
         <header id="article_list__header" class="popup__header" slot="header">
@@ -674,32 +691,12 @@
             })
         }
 
-        function enableBtn(btn) {
-            if (typeof btn === 'string')
-                btn = document.getElementById(btn);
-            if (btn.disabled)
-                btn.disabled = false;
-        }
-
-        function disableBtn(btn) {
-            if (typeof btn === 'string')
-                btn = document.getElementById(btn);
-            if (!btn.disabled)
-                btn.disabled = true;
-        }
-
         //helper functions
 
         function setAttributes(el, attrs) {
             for (var key in attrs) {
                 el.setAttribute(key, attrs[key]);
             }
-        }
-
-        function clearAllInputs(parent) {
-            parent.querySelectorAll("input, textarea").forEach((field) => {
-                field.value = '';
-            })
         }
 
         function prevArticle(container) {
@@ -765,6 +762,34 @@
         function showArticle(articleId) {
             cloudArticleApp.setLocalDefault(articleId);
             cloudArticleApp.retrieveLatestContent(true);
+        }
+
+        async function incScore(value){
+            let currentScore = parseFloat(getRef('update_score_field').value)
+            if(!currentScore){
+                currentScore = 0
+            }
+            if(currentScore + value <= 100){
+                currentScore += value;
+                getRef('update_score_field').value = currentScore.toFixed(1)
+            }
+            else{
+                notify(`You can't give score more than 100.`, 'error')
+            }
+        }
+
+        async function getNewScore(currentScore){
+            return new Promise((resolve, reject) => {
+                getRef('update_score_field').value = currentScore
+                showPopup('scoring_popup')
+                getRef('get_new_score').addEventListener('clicked', e = () => {
+                    resolve(getRef('update_score_field').value)
+                    hidePopup()
+                })
+                getRef('scoring_popup__close_button').onclick = () => {
+                    reject(false)
+                }
+            })
         }
 
         function buildAdminUI() {
@@ -10250,10 +10275,9 @@
                             </div>
                             <div class="card-footer">
                                 <h5 id="exp_${gen_div_id}" title="Add this article as selected" class="select-for-export" onclick="cloudArticleApp.register_content_to_export(event)">Select</h5>
-                                <h5 title="Give score to this article">
+                                <h5 id="score_${vc}" onclick="cloudArticleApp.upgrade_article(event, ${article_data.score})" title="Give score to this article">
                                     <svg viewBox="0 0 16.55 16" style="enable-background:new 0 0 16.55 16;" xml:space="preserve" fill="${fill}">
                                         <polygon
-                                        id="score_${vc}" onclick="cloudArticleApp.upgrade_article(event)"
                                          points="8.28,13.27 3.16,16 4.14,10.21 0,6.11 5.72,5.27 8.28,0 10.83,5.27 16.55,6.11 12.41,10.21 13.39,16"/>
                                     </svg>
                                     ${article_data.score}
@@ -10568,12 +10592,17 @@
                 buttonVisibility('hide', parent)
             },
 
-            upgrade_article: function (event) {
+            upgrade_article: async function (event, currentScore) {
                 if(floGlobals.subAdmins.includes(myFloID)){
                      
-                    let new_score = prompt("Enter Score: ", 0);
+                    let new_score = await getNewScore(currentScore);
+                    console.log(new_score)
                     new_score = Number(new_score);
-                    if (typeof new_score !== "number" || new_score <= 0) return;
+                    if (typeof new_score !== "number" || new_score <= 0);
+                    if(new_score < currentScore){
+                        notify(`You can't score less than previous.`, 'error')
+                        return
+                    }
                     let target = cloudArticleApp.getEventTarget(event);
                     let article_vc = target.id.substr(6);
                     let contents = floGlobals.appObjects[this.SUBJECT];
