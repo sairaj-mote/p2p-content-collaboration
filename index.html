@@ -10246,7 +10246,7 @@
                                     ${article_data.content.trim()}
                                 </div>
                                 <input type="hidden" id="hash_${gen_div_id}" value="${content_hash}"/>
-                                <button class="hide submit-btn" onclick="cloudArticleApp.edit_onfocuout(this.parentNode)">Submit</button>
+                                <button class="hide button button--primary" onclick="cloudArticleApp.edit_onfocuout(this.parentNode)">Submit</button>
                             </div>
                             <div class="card-footer">
                                 <h5 id="exp_${gen_div_id}" title="Add this article as selected" class="select-for-export" onclick="cloudArticleApp.register_content_to_export(event)">Select</h5>
@@ -10520,7 +10520,7 @@
 
                 //showMessage(`Adding new iteration to article ${article_name}`);
                 // todo - add updating score notification 
-                notifications.push('Updating score')
+                notify('Updating score...')
 
                 if (floGlobals.subAdmins.includes(myFloID)) {
                     floCloudAPI.updateObjectData(this.SUBJECT);
@@ -10541,6 +10541,7 @@
                 }
 
                 await this.retrieveLatestContent();
+                notify('Score updated', 'success')
                 // todo - Add updated score notification
             },
 
