@@ -66,7 +66,6 @@ smButton.innerHTML = `
     -o-transition: box-shadow 0.3s;
     transition: box-shadow 0.3s;
     transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
-    text-transform: capitalize;
     font-family: inherit;
     font-size: 0.9rem;
     font-weight: 500;

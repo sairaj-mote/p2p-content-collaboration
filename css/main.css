@@ -43,8 +43,8 @@ button {
   cursor: pointer;
   outline: none;
   color: inherit;
-  -webkit-tap-highlight-color: transparent;
   font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button {
@@ -338,50 +338,6 @@ label {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-}
-
-.popup-container {
-  display: -ms-grid;
-  display: grid;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  place-items: center;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 10;
-  -webkit-transition: opacity 0.3s ease;
-  transition: opacity 0.3s ease;
-}
-
-.popup-container .popup {
-  width: 26rem;
-  -ms-flex-item-align: center;
-  align-self: center;
-  border-radius: 0.4rem;
-  height: auto;
-  padding: 1.5rem;
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background: rgba(var(--text-color), 0.06);
-  -webkit-transform: translateY(1rem);
-  transform: translateY(1rem);
-  -webkit-transition: -webkit-transform 0.3s;
-  transition: -webkit-transform 0.3s;
-  transition: transform 0.3s;
-  transition: transform 0.3s, -webkit-transform 0.3s;
-  -webkit-box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.24);
-  box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.24);
-  color: rgba(var(--text-color), 1);
-  overflow-y: auto;
-  max-height: 100vh;
 }
 
 .solid-background {
@@ -712,6 +668,16 @@ label {
   color: rgba(var(--text-color), 1);
 }
 
+.sign-in-mode__button {
+  height: 8rem;
+  width: 8rem;
+}
+
+.big-icon {
+  fill: none;
+  stroke: rgba(var(--text-color), 1);
+}
+
 #sign_in div:first-of-type {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -796,14 +762,14 @@ label {
 }
 
 #navbar h5 {
+  font-size: 0.8rem;
   font-weight: normal;
-  margin: 0 0 0.25rem 0;
+  margin-bottom: 0.2rem;
 }
 
-#navbar span {
-  font-size: 0.9rem;
-  -ms-grid-column-align: center;
-  justify-self: center;
+.app-name {
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 #icon {
@@ -926,17 +892,17 @@ label {
     transform: rotate(359deg);
   }
 }
-#section_plot_modal p {
+#section_plot_popup p {
   margin: 1rem 0;
   font-weight: 400;
 }
 
-#section_plot_modal details {
+#section_plot_popup details {
   margin-bottom: 1rem;
   cursor: pointer;
 }
 
-#section_plot_modal summary {
+#section_plot_popup summary {
   outline: none;
 }
 
@@ -1010,8 +976,8 @@ label {
     max-width: 40rem;
   }
 
-  #section_plot_modal {
-    width: 42rem;
+  #section_plot_popup {
+    --width: 42rem;
   }
 
   #article_list__header {
@@ -1093,13 +1059,6 @@ label {
   .navigation-arrows {
     opacity: 0;
     pointer-events: none;
-  }
-
-  .popup-container .popup {
-    -ms-flex-item-align: end;
-    align-self: flex-end;
-    width: 100%;
-    border-radius: 0.5rem 0.5rem 0 0;
   }
 
   #article_list__header {

@@ -34,7 +34,7 @@
         </div>
     </sm-popup>
     <sm-notifications id="notification_drawer"></sm-notifications>
-    <sm-popup id="sign_in" class="popup">
+    <sm-popup id="sign_in">
         <header class="container-header">
             <button title="Go to previus section" class="hide-completely back-btn" id="back_to_main_page">
                 <svg class="icon option__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M7.828 11H20v2H7.828l5.364 5.364-1.414 1.414L4 12l7.778-7.778 1.414 1.414z"/></svg>
@@ -48,8 +48,8 @@
             Please enter your FLO private key to continue.
         </p>
         <div class="fade-in">
-            <button id="guest_btn" class="hover" title="sign in as a guest">
-                <svg class="icon" viewBox="0 0 64 64">
+            <button id="guest_btn" class="sign-in-mode__button" title="sign in as a guest">
+                <svg class="icon big-icon" viewBox="0 0 64 64">
                     <title>guest</title>
                     <path d="M44.7,19.53c0,8.58-4.36,15.95-12.7,15.9-7.48,0-11.75-5.88-12.55-13.26" />
                     <path
@@ -61,8 +61,8 @@
                 </svg>
                 as guest
             </button>
-            <button id="priv_key_btn" class="hover" title="sign in with private key">
-                <svg class="icon" viewBox="0 0 64 64">
+            <button id="priv_key_btn" class="sign-in-mode__button" title="sign in with private key">
+                <svg class="icon big-icon" viewBox="0 0 64 64">
                     <title>password</title>
                     <path
                         d="M20.29,21.49H43.71A9.31,9.31,0,0,1,53,30.8V41.93C53,53.7,43.39,63.71,31.61,63.5A21,21,0,0,1,11,42.48V30.8a9.31,9.31,0,0,1,9.32-9.31h0V12.61A12,12,0,0,1,31.21.53,11.71,11.71,0,0,1,43.71,12.2v9.29" />
@@ -142,7 +142,10 @@
             </g>
         </svg>
         <span>
-            <h5>RanchiMall</h5>CONTENT COLLABORATION
+            <h5>RanchiMall</h5>
+            <span class="app-name">
+                Content Collaboration
+            </span>
         </span>
         <div class="spacer"></div>
 <!--         <button id="refresh_btn" title="Refresh the content" class="button hide-on-mobile"
@@ -179,7 +182,7 @@
                     New Article
                 </span>
             </sm-menu-option>
-                <sm-menu-option class="admin-options hide-completely" onclick="showPopup('section_plot_modal')" title="Create new sections by plot diagram">
+                <sm-menu-option class="admin-options hide-completely" onclick="showPopup('section_plot_popup')" title="Create new sections by plot diagram">
                 <svg class="icon option__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M2 18h10v2H2v-2zm0-7h20v2H2v-2zm0-7h20v2H2V4zm16 14v-3h2v3h3v2h-3v3h-2v-3h-3v-2h3z"/></svg>
                 <span class="option__label">
                     Add Sections from Plot Diagram
@@ -203,7 +206,7 @@
             </g>
         </svg>
         <h4 id="show_log_events"></h4>
-        <button onclick="cloudArticleApp.logout()">Clear All Data</button>
+        <sm-button class="margin-top-1-5" onclick="cloudArticleApp.logout()">Clear all data</sm-button>
     </div>
 
     <section id="article_container">
@@ -649,6 +652,7 @@
                     backButton = document.getElementById('back_to_main_page');
                 document.getElementById('guest_btn').onclick = function () {
                     hidePopup()
+                    showLoader()
                     reject(null);
                 }
                 document.getElementById('priv_key_btn').onclick = function () {
@@ -777,7 +781,7 @@
                                 <svg class="icon icon-only close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
                             </button>
                             <h3>Create a new article</h3>
-                            <button class="button button--primary" id="create_article_btn">Create</button>
+                            <button class="button button--primary" id="create_article_btn" type="submit">Create</button>
                         </header>
                         <input type="text" id="article_name" placeholder="Article name">
                         <input type="number" id="section_nums" placeholder="Number of sections">
@@ -793,7 +797,7 @@
                                 <svg class="icon icon-only close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
                             </button>
                             <h3>Edit section names</h3>
-                            <button class="button button--primary" onclick="cloudArticleApp.update_section_names()">
+                            <button class="button button--primary" onclick="cloudArticleApp.update_section_names()" type="submit">
                                 <svg class="icon option__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg>
                                 <span class="option__label">
                                     Done
@@ -820,15 +824,17 @@
                 })
 
                 let sectionPlotUI = `
-                        <sm-popup id="section_plot_modal">
-                            <header class="heading">
-                            <svg class="icon" viewBox="0 0 64 64" onclick="hidePopup()">
-                                <title>close</title>
-                                <line x1="64" y1="0" x2="0" y2="64"/>
-                            <line x1="64" y1="64" x2="0" y2="0"/>
-                            </svg>
-                            <h3>Create Plot Diagram</h3>
-                            <button id="section_plot_btn">Create</button>
+                        <sm-popup id="section_plot_popup">
+                            <header class="popup__header" slot="header">
+                                <button class="close-button" onclick="hidePopup()">
+                                    <svg class="icon icon-only close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
+                                </button>
+                                <h3>Create Plot Diagram</h3>
+                                <button id="section_plot_btn" class="button button--primary" type="submit">
+                                    <span class="option__label">
+                                        Create
+                                    </span>
+                                </button>
                             </header>
                             <details>
                             <summary class="label">How it works?</summary>
