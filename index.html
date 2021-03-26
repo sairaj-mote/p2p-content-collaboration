@@ -10277,7 +10277,7 @@
                             </div>
                             <div class="card-footer">
                                 <h5 id="exp_${gen_div_id}" title="Add this article as selected" class="select-for-export" onclick="cloudArticleApp.register_content_to_export(event)">Select</h5>
-                                <h5 id="score_${vc}" onclick="cloudArticleApp.upgrade_article(event, ${article_data.score})" title="Give score to this article">
+                                <h5 id="score_${vc}" class="score-star" onclick="cloudArticleApp.upgrade_article(event, ${article_data.score})" title="Give score to this article">
                                     <svg viewBox="0 0 16.55 16" style="enable-background:new 0 0 16.55 16;" xml:space="preserve" fill="${fill}">
                                         <polygon
                                          points="8.28,13.27 3.16,16 4.14,10.21 0,6.11 5.72,5.27 8.28,0 10.83,5.27 16.55,6.11 12.41,10.21 13.39,16"/>
@@ -10605,7 +10605,7 @@
                             notify(`You can't score less than previous.`, 'error')
                             return
                         }
-                        let target = cloudArticleApp.getEventTarget(event);
+                        let target = event.target.closest('.score-star')
                         let article_vc = target.id.substr(6);
                         let contents = floGlobals.appObjects[this.SUBJECT];
                         for (title of Object.keys(contents)) {
