@@ -419,40 +419,6 @@ label {
   overflow-y: auto;
 }
 
-.heading {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 0.5rem 0;
-  margin-bottom: 0.5rem;
-}
-
-.heading h3 {
-  font-weight: 500;
-}
-
-.heading button {
-  margin-left: auto;
-  margin-right: 0;
-  -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
-  align-self: center;
-}
-
-.heading > .icon:first-of-type {
-  margin-right: 1rem;
-  cursor: pointer;
-  stroke: rgba(var(--text-color), 1);
-}
-
 .gallery-container {
   position: relative;
   overflow: hidden;
@@ -649,18 +615,6 @@ label {
 
 #sign_in {
   --backdrop: rgba(var(--foreground-color), 1);
-  border-radius: 0;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column wrap;
-  flex-flow: column wrap;
-  padding: 2rem;
-  overflow: hidden;
-  margin: 1rem;
-  -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
-  align-self: center;
-  width: calc(100% - 2rem);
 }
 
 #sign_in h2 {
